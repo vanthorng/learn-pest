@@ -96,6 +96,16 @@ class Team extends Model
     }
 
     /**
+     * Get this team's chart of accounts.
+     *
+     * @return HasMany<ChartOfAccount, $this>
+     */
+    public function chartOfAccounts(): HasMany
+    {
+        return $this->hasMany(ChartOfAccount::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
