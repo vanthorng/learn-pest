@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, ListTree, Package } from 'lucide-react';
+import { BookOpen, FileText, FolderGit2, LayoutGrid, ListTree, Package } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -17,6 +17,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as chartOfAccountsIndex } from '@/routes/chart-of-accounts';
 import { index as itemsIndex } from '@/routes/items';
+import { index as estimatesIndex } from '@/routes/estimates';
 import type { NavItem } from '@/types';
 
 export function AppSidebar() {
@@ -42,6 +43,11 @@ export function AppSidebar() {
                       title: 'Items',
                       href: itemsIndex(page.props.currentTeam.slug),
                       icon: Package,
+                  },
+                  {
+                      title: 'Estimates',
+                      href: estimatesIndex(page.props.currentTeam.slug),
+                      icon: FileText,
                   },
               ]
             : []),

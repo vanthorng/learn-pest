@@ -132,6 +132,16 @@ class Team extends Model
     }
 
     /**
+     * Get all estimates for this team.
+     *
+     * @return HasMany<Estimate, $this>
+     */
+    public function estimates(): HasMany
+    {
+        return $this->hasMany(Estimate::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChartOfAccountController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EstimateController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Controllers\VendorController;
@@ -32,6 +33,11 @@ Route::prefix('{current_team}')
         Route::post('items', [ItemController::class, 'store'])->name('items.store');
         Route::patch('items/{item}', [ItemController::class, 'update'])->name('items.update');
         Route::delete('items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
+        Route::get('estimates', [EstimateController::class, 'index'])->name('estimates.index');
+        Route::post('estimates', [EstimateController::class, 'store'])->name('estimates.store');
+        Route::patch('estimates/{estimate}', [EstimateController::class, 'update'])->name('estimates.update');
+        Route::patch('estimates/{estimate}/status', [EstimateController::class, 'updateStatus'])->name('estimates.status.update');
+        Route::delete('estimates/{estimate}', [EstimateController::class, 'destroy'])->name('estimates.destroy');
     });
 
 Route::middleware(['auth'])->group(function () {
