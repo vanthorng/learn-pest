@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChartOfAccountController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Controllers\VendorController;
 use App\Http\Middleware\EnsureTeamMembership;
@@ -27,6 +28,10 @@ Route::prefix('{current_team}')
         Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
         Route::patch('customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
         Route::delete('customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+        Route::get('items', [ItemController::class, 'index'])->name('items.index');
+        Route::post('items', [ItemController::class, 'store'])->name('items.store');
+        Route::patch('items/{item}', [ItemController::class, 'update'])->name('items.update');
+        Route::delete('items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
     });
 
 Route::middleware(['auth'])->group(function () {

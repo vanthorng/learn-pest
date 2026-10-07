@@ -122,6 +122,16 @@ class Team extends Model
     }
 
     /**
+     * Get all items for this team.
+     *
+     * @return HasMany<Item, $this>
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
