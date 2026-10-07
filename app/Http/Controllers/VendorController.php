@@ -6,6 +6,7 @@ use App\Http\Requests\Vendor\StoreVendorRequest;
 use App\Http\Requests\Vendor\UpdateVendorRequest;
 use App\Models\Team;
 use App\Models\Vendor;
+use App\Services\Vendor\VendorService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -19,23 +20,23 @@ class VendorController extends Controller
         ]);
     }
 
-    public function store(StoreVendorRequest $request, Team $currentTeam): RedirectResponse
+    public function store(StoreVendorRequest $request, Team $currentTeam, VendorService $vendorService): RedirectResponse
     {
-        $currentTeam->vendors()->create($request->validated());
+        $vendorService->create($currentTeam, $request->validated());
 
         return to_route('vendors.index', $currentTeam);
     }
 
-    public function update(UpdateVendorRequest $request, Team $currentTeam, Vendor $vendor): RedirectResponse
+    public function update(UpdateVendorRequest $request, Team $currentTeam, Vendor $vendor, VendorService $vendorService): RedirectResponse
     {
-        $vendor->update($request->validated());
+        $vendorService->update($vendor, $request->validated());
 
         return to_route('vendors.index', $currentTeam);
     }
 
-    public function destroy(Team $currentTeam, Vendor $vendor): RedirectResponse
+    public function destroy(Team $currentTeam, Vendor $vendor, VendorService $vendorService): RedirectResponse
     {
-        $vendor->delete();
+        $vendorService->delete($vendor);
 
         return to_route('vendors.index', $currentTeam);
     }

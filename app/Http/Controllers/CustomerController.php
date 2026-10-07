@@ -6,6 +6,7 @@ use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
 use App\Models\Team;
+use App\Services\Customer\CustomerService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,9 +32,9 @@ class CustomerController extends Controller
     /**
      * Store a new customer for the current team.
      */
-    public function store(StoreCustomerRequest $request, Team $currentTeam): RedirectResponse
+    public function store(StoreCustomerRequest $request, Team $currentTeam, CustomerService $customerService): RedirectResponse
     {
-        $currentTeam->customers()->create($request->validated());
+        $customerService->create($currentTeam, $request->validated());
 
         return to_route('customers.index', $currentTeam);
     }
@@ -41,9 +42,9 @@ class CustomerController extends Controller
     /**
      * Update the specified customer.
      */
-    public function update(UpdateCustomerRequest $request, Team $currentTeam, Customer $customer): RedirectResponse
+    public function update(UpdateCustomerRequest $request, Team $currentTeam, Customer $customer, CustomerService $customerService): RedirectResponse
     {
-        $customer->update($request->validated());
+        $customerService->update($customer, $request->validated());
 
         return to_route('customers.index', $currentTeam);
     }
@@ -51,9 +52,9 @@ class CustomerController extends Controller
     /**
      * Delete the specified customer.
      */
-    public function destroy(Team $currentTeam, Customer $customer): RedirectResponse
+    public function destroy(Team $currentTeam, Customer $customer, CustomerService $customerService): RedirectResponse
     {
-        $customer->delete();
+        $customerService->delete($customer);
 
         return to_route('customers.index', $currentTeam);
     }

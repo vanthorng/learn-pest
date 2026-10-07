@@ -6,6 +6,7 @@ use App\Http\Requests\ChartOfAccount\StoreChartOfAccountRequest;
 use App\Http\Requests\ChartOfAccount\UpdateChartOfAccountRequest;
 use App\Models\ChartOfAccount;
 use App\Models\Team;
+use App\Services\ChartOfAccount\ChartOfAccountService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,9 +32,9 @@ class ChartOfAccountController extends Controller
     /**
      * Store a newly created chart of account.
      */
-    public function store(StoreChartOfAccountRequest $request, Team $currentTeam): RedirectResponse
+    public function store(StoreChartOfAccountRequest $request, Team $currentTeam, ChartOfAccountService $chartOfAccountService): RedirectResponse
     {
-        $currentTeam->chartOfAccounts()->create($request->validated());
+        $chartOfAccountService->create($currentTeam, $request->validated());
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Account created.')]);
 
@@ -43,9 +44,9 @@ class ChartOfAccountController extends Controller
     /**
      * Update the specified chart of account.
      */
-    public function update(UpdateChartOfAccountRequest $request, Team $currentTeam, ChartOfAccount $chartOfAccount): RedirectResponse
+    public function update(UpdateChartOfAccountRequest $request, Team $currentTeam, ChartOfAccount $chartOfAccount, ChartOfAccountService $chartOfAccountService): RedirectResponse
     {
-        $chartOfAccount->update($request->validated());
+        $chartOfAccountService->update($chartOfAccount, $request->validated());
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Account updated.')]);
 
@@ -55,9 +56,9 @@ class ChartOfAccountController extends Controller
     /**
      * Remove the specified chart of account.
      */
-    public function destroy(Team $currentTeam, ChartOfAccount $chartOfAccount): RedirectResponse
+    public function destroy(Team $currentTeam, ChartOfAccount $chartOfAccount, ChartOfAccountService $chartOfAccountService): RedirectResponse
     {
-        $chartOfAccount->delete();
+        $chartOfAccountService->delete($chartOfAccount);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Account deleted.')]);
 
