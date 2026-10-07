@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Customer;
 
-use App\Models\ChartOfAccount;
 use App\Models\Team;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateChartOfAccountRequest extends FormRequest
+class StoreCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +25,15 @@ class UpdateChartOfAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => [
+            'name' => [
                 'required',
                 'string',
-                'max:20',
-                Rule::unique('chart_of_accounts', 'code')
-                    ->where('team_id', $this->team()->id)
-                    ->ignore($this->chartOfAccount()),
+                'max:255',
+                Rule::unique('customers', 'name')->where('team_id', $this->team()->id),
             ],
-            'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', Rule::in(['asset', 'liability', 'equity', 'revenue', 'expense'])],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'address' => ['nullable', 'string', 'max:1000'],
         ];
     }
 
@@ -45,13 +43,5 @@ class UpdateChartOfAccountRequest extends FormRequest
     protected function team(): Team
     {
         return $this->route('current_team');
-    }
-
-    /**
-     * Get the account being updated.
-     */
-    protected function chartOfAccount(): ChartOfAccount
-    {
-        return $this->route('chartOfAccount');
     }
 }

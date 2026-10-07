@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ChartOfAccountController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Teams\TeamInvitationController;
+use App\Http\Controllers\VendorController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +19,14 @@ Route::prefix('{current_team}')
         Route::post('chart-of-accounts', [ChartOfAccountController::class, 'store'])->name('chart-of-accounts.store');
         Route::patch('chart-of-accounts/{chartOfAccount}', [ChartOfAccountController::class, 'update'])->name('chart-of-accounts.update');
         Route::delete('chart-of-accounts/{chartOfAccount}', [ChartOfAccountController::class, 'destroy'])->name('chart-of-accounts.destroy');
+        Route::get('vendors', [VendorController::class, 'index'])->name('vendors.index');
+        Route::post('vendors', [VendorController::class, 'store'])->name('vendors.store');
+        Route::patch('vendors/{vendor}', [VendorController::class, 'update'])->name('vendors.update');
+        Route::delete('vendors/{vendor}', [VendorController::class, 'destroy'])->name('vendors.destroy');
+        Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+        Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
+        Route::patch('customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
+        Route::delete('customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
     });
 
 Route::middleware(['auth'])->group(function () {

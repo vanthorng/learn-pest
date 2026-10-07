@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Vendor;
 
 use App\Models\Team;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreChartOfAccountRequest extends FormRequest
+class StoreVendorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,20 +25,12 @@ class StoreChartOfAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => [
-                'required',
-                'string',
-                'max:20',
-                Rule::unique('chart_of_accounts', 'code')->where('team_id', $this->team()->id),
-            ],
-            'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', Rule::in(['asset', 'liability', 'equity', 'revenue', 'expense'])],
+            'name' => ['required', 'string', 'max:255', Rule::unique('vendors', 'name')->where('team_id', $this->team()->id)],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:50'],
         ];
     }
 
-    /**
-     * Get the team associated with this request.
-     */
     protected function team(): Team
     {
         return $this->route('current_team');

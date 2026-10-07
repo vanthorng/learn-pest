@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreChartOfAccountRequest;
-use App\Http\Requests\UpdateChartOfAccountRequest;
+use App\Http\Requests\ChartOfAccount\StoreChartOfAccountRequest;
+use App\Http\Requests\ChartOfAccount\UpdateChartOfAccountRequest;
 use App\Models\ChartOfAccount;
 use App\Models\Team;
 use Illuminate\Http\RedirectResponse;
